@@ -1,28 +1,34 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
 :root {
-  --bg:        #0a0c10;
-  --surface:   #11151c;
-  --surface2:  #181d27;
-  --border:    #1e2535;
-  --border2:   #2a3347;
-  --text:      #e2e8f4;
-  --text-muted:#6b7a99;
-  --text-dim:  #3d4a63;
-  --accent:    #00e5ff;
-  --accent2:   #7c3aed;
-  --low:       #22c55e;
-  --low-bg:    #052e16;
-  --med:       #f59e0b;
-  --med-bg:    #2d1a00;
-  --high:      #ef4444;
-  --high-bg:   #2d0707;
-  --font-mono: 'Space Mono', monospace;
-  --font-sans: 'Syne', sans-serif;
-  --radius:    8px;
-  --radius-lg: 16px;
-  --glow-accent: 0 0 20px rgba(0,229,255,0.15);
-  --glow-high: 0 0 20px rgba(239,68,68,0.25);
+  --bg:          #060810;
+  --bg2:         #0b0f1a;
+  --surface:     #0f1420;
+  --surface2:    #141926;
+  --border:      #1a2235;
+  --border2:     #243048;
+  --accent:      #00ffe7;
+  --accent2:     #ff2d6b;
+  --accent3:     #7b61ff;
+  --text:        #d4e4ff;
+  --text-muted:  #5a7099;
+  --text-dim:    #2a3a55;
+  --low:         #00e676;
+  --low-bg:      #001a0e;
+  --med:         #ffab00;
+  --med-bg:      #1a1000;
+  --high:        #ff3d5a;
+  --high-bg:     #1a0008;
+  --font-mono:   'Share Tech Mono', monospace;
+  --font-display:'Orbitron', sans-serif;
+  --font-body:   'Rajdhani', sans-serif;
+  --nav-w:       240px;
+  --radius:      6px;
+  --radius-lg:   12px;
+  --glow:        0 0 20px rgba(0,255,231,0.12);
+  --glow-red:    0 0 20px rgba(255,45,107,0.2);
 }
 
 html { scroll-behavior: smooth; }
@@ -30,16 +36,58 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
+  font-size: 16px;
   min-height: 100vh;
-  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--surface); }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,255,231,0.012) 2px,
+    rgba(0,255,231,0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
 
-/* Utility */
-.mono { font-family: var(--font-mono); }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
+  50%       { opacity: 0.4; box-shadow: none; }
+}
+@keyframes scanline-move {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(100vh); }
+}
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes glitch {
+  0%   { clip-path: inset(0 0 95% 0); transform: translate(-2px,0); }
+  20%  { clip-path: inset(30% 0 50% 0); transform: translate(2px,0); }
+  40%  { clip-path: inset(60% 0 20% 0); transform: translate(-1px,0); }
+  60%  { clip-path: inset(80% 0 5% 0);  transform: translate(1px,0); }
+  80%  { clip-path: inset(10% 0 80% 0); transform: translate(-2px,0); }
+  100% { clip-path: inset(0 0 95% 0);  transform: translate(0,0); }
+}
+
+.page-enter { animation: fadeUp 0.35s ease forwards; }
