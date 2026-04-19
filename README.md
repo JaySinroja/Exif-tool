@@ -23,24 +23,33 @@ A full-stack web application for forensic analysis of image EXIF metadata, built
 ```
 exif-forensics/
 ├── backend/
-│   ├── app.py              # Flask API (3 endpoints)
-│   ├── exif_extractor.py   # EXIF parsing via Pillow + piexif
-│   ├── risk_analyzer.py    # Pattern-based risk scoring
-│   └── requirements.txt
+│   ├── app.py                    # Flask API (4 endpoints: /upload, /inject, /strip, /health)
+│   ├── exif_extractor.py         # EXIF parsing via Pillow + piexif
+│   ├── risk_analyzer.py          # Pattern-based risk scoring
+│   └── requirements.txt          # Python dependencies
 └── frontend/
     ├── public/
-    │   └── index.html
+    │   └── index.html            # Single HTML entry point
     ├── src/
-    │   ├── App.jsx
-    │   ├── index.js
-    │   ├── index.css
-    │   └── components/
-    │       ├── UploadImage.jsx
-    │       ├── MetadataViewer.jsx
-    │       ├── GoogleMapViewer.jsx
-    │       ├── RiskMatrix.jsx
-    │       └── MetadataEditor.jsx
-    └── package.json
+    │   ├── App.jsx               # Main app with page routing
+    │   ├── api.js                # Flask base URL configuration
+    │   ├── index.js              # React entry point
+    │   ├── index.css             # Global styles and CSS variables
+    │   ├── components/
+    │   │   ├── BackendStatus.jsx  # Flask connection status indicator
+    │   │   ├── GoogleMapViewer.jsx# GPS location map (OpenStreetMap)
+    │   │   ├── MetadataEditor.jsx # Inject / strip metadata form
+    │   │   ├── MetadataViewer.jsx # Searchable metadata table
+    │   │   ├── PageHeader.jsx     # Top header shown on every page
+    │   │   ├── RiskMatrix.jsx     # Risk badge, meter and findings
+    │   │   ├── Sidebar.jsx        # Left navigation menu
+    │   │   └── UploadImage.jsx    # Drag and drop image uploader
+    │   └── pages/
+    │       ├── AboutPage.jsx      # About the tool and EXIF information
+    │       ├── Dashboard.jsx      # Main page — upload, metadata, GPS map
+    │       ├── MetadataEditorPage.jsx # Full page for inject/strip actions
+    │       └── RiskPage.jsx       # Full risk analysis results page
+    └── package.json              # Node dependencies and scripts
 ```
 
 ---
